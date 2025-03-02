@@ -1,10 +1,14 @@
 package com.bojan.wordgame.service;
 
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Random;
 
 @Service
+@Scope("prototype")
 public class GameService {
 
     private String randomlyChosenWord = null;
@@ -36,15 +40,21 @@ public class GameService {
         return ret;
     }
 
-    public void addGuess(char guessedCharacter) {
+    public boolean addGuess(char guessedCharacter) {
+
+        boolean isGuessedCorrect = false;
 
         for (int i = 0; i < randomlyChosenWord.length(); i++) {
             if (guessedCharacter == randomlyChosenWord.charAt(i)) {
 
                 allCharactersOfRandomWord[i] = guessedCharacter;
+                isGuessedCorrect = true;
 
             }
         }
 
+        return isGuessedCorrect;
+
     }
+
 }

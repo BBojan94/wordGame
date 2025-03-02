@@ -3,16 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>GuessTheWord</title>
+
+    <script th:inline="javascript">
+        window.onload = function checkIfGameOver() {
+
+            var numberOfTriesRemaining = [[${triesLeft}]];
+
+            if (numberOfTriesRemaining === 0) {
+                alert("Game Over");
+                document.getElementById('guessedCharacter').disabled = true;
+                document.getElementById('try').disabled = true;
+            }
+
+        }
+
+        function reloadGame() {
+
+            window.location.href = "http://localhost:8080/reload";
+
+        }
+    </script>
+
 </head>
 <body>
 <h1 align = "center">Guess the word</h1>
 <h2 align = "center" th:text = "${wordToDisplay}">Show a random word</h2>
+<h2 align = "right" th:text = "'Tries remaining: ' +  ${triesLeft}">Show Number of tries left: </h2>
 <hr/>
+<input type = "button" value = "reload" id = "reload" style = "float:right" onclick = "reloadGame()">
 <div align = "center">
     <form action="game-home" method = "GET">
         <label>Guess a character: </label>
-        <input type = "text" name = "guessedCharacter"/>
-        <input type = "submit" value = "try"/>
+        <input type = "text" name = "guessedCharacter" id = "guessedCharacter"/>
+        <input type = "submit" value = "try" id = "try"/>
     </form>
 </div>
 </body>
